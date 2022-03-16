@@ -9,7 +9,11 @@ import { Button, Input, UserCard } from "../components";
 import logo from "../assets/logo.png";
 
 function Home() {
-  const { search, userData } = useContext(MainContext);
+  const { search, searchResult } = useContext(MainContext);
+
+  const showMore = () => {
+    return <Link to="/results">Show more...</Link>;
+  };
 
   return (
     <div>
@@ -24,23 +28,19 @@ function Home() {
       </div>
       <div>
         {search &&
-          userData.map((data) =>
-            [data[0], data[2], data[4]]
-              .filter(
-                (searchItem) =>
-                  searchItem.toLowerCase().includes(search) && [...data]
-              )
-              .map((item, index) => (
-                <UserCard
-                  name={data[0]}
-                  email={data[2]}
-                  date={data[3]}
-                  country={data[4]}
-                  city={data[5]}
-                />
-              ))
-          )}
+          searchResult
+            .slice(0, 3)
+            .map((item) => (
+              <UserCard
+                name={item[0]}
+                email={item[2]}
+                date={item[3]}
+                country={item[4]}
+                city={item[5]}
+              />
+            ))}
       </div>
+      {search && <Link to="/results">Show more...</Link>}
     </div>
   );
 }
