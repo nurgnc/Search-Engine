@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const MarginVertical = styled.div`
-  margin: 3rem auto;
+  margin: 3rem 0;
   width: ${(props) => props.width};
 `;
 
@@ -28,9 +28,7 @@ export const Flex = styled.div`
   justify-content: ${(props) => props.justify};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  background: ${(props) => props.backGround};
-  border-radius: ${(props) => props.radius};
-  flex-wrap: ${(props) => props.wrap};
+  margin: ${(props) => props.margin};
   & > svg {
     margin-right: 10px;
   }

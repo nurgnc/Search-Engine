@@ -16,7 +16,7 @@ function Results() {
   const { search, searchResult, currentPage, usersPerPage, totalUsers } =
     useContext(MainContext);
   const [select, setSelect] = useState("none");
-  const [resultData, setResultData] = useState([...searchResult]);
+  const [resultData, setResultData] = useState(searchResult);
 
   // get current movies
   const indexOfLastUser = currentPage * usersPerPage;
@@ -63,34 +63,39 @@ function Results() {
           </Link>
         </Flex>
       </Margin>
-      {search && (
-        <Flex flexDirection="row" align="center" justify="flex-end">
-          <Select>
-            <select name="Order By" onChange={(e) => setSelect(e.target.value)}>
-              <option value="none">&#8645; Order</option>
-              <option value="name-asc">Name ascending</option>
-              <option value="name-desc">Name descending</option>
-              <option value="year-asc">Year ascending</option>
-              <option value="year-desc">Year descending</option>
-            </select>
-          </Select>
-        </Flex>
-      )}
-      <MarginVertical>
-        {resultData
-          .slice(indexOfFirstUser, indexOfLastUser)
-          .map((item, index) => (
-            <UserCard
-              key={index}
-              name={item[0]}
-              email={item[2]}
-              date={item[3]}
-              country={item[4]}
-              city={item[5]}
-            />
-          ))}
-      </MarginVertical>
-      {totalUsers > 3 && <Pagination />}
+      <Flex width="80%" flexDirection="column" justify="center" margin="0 auto">
+        {search && (
+          <Flex flexDirection="row" align="center" justify="flex-end">
+            <Select>
+              <select
+                name="Order By"
+                onChange={(e) => setSelect(e.target.value)}
+              >
+                <option value="none">&#8645; Order</option>
+                <option value="name-asc">Name ascending</option>
+                <option value="name-desc">Name descending</option>
+                <option value="year-asc">Year ascending</option>
+                <option value="year-desc">Year descending</option>
+              </select>
+            </Select>
+          </Flex>
+        )}
+        <MarginVertical>
+          {resultData
+            ?.slice(indexOfFirstUser, indexOfLastUser)
+            .map((item, index) => (
+              <UserCard
+                key={index}
+                name={item[0]}
+                email={item[2]}
+                date={item[3]}
+                country={item[4]}
+                city={item[5]}
+              />
+            ))}
+        </MarginVertical>
+        {totalUsers > 3 && <Pagination />}
+      </Flex>
     </Container>
   );
 }

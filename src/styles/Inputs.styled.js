@@ -19,4 +19,7 @@ export const SearchInput = styled.input`
     box-sizing: border-box;
     border-radius: 8px;
   }
+  & > input:invalid {
+    border-color: red;
+  }
 `;
