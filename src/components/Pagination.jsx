@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 // context
 import { MainContext } from "../contexts/MainContextProvider";
 // css
-import { Flex } from "../styles/baseStyles";
+import { Flex, Margin } from "../styles/baseStyles";
 import { Paginate, PageButton } from "../styles/Pagination";
 
 function Pagination() {
@@ -28,19 +28,37 @@ function Pagination() {
             Previous
           </PageButton>
         </li>
-        {pageNumbers.map((number, index) => {
-          return (
-            <li key={number}>
-              <PageButton
-                type="button"
-                active={currentPage === number ? "active" : ""}
-                onClick={() => paginate(number)}
-              >
-                {number}
-              </PageButton>
-            </li>
-          );
-        })}
+        {pageNumbers
+          .slice(currentPage - 1, currentPage + 2)
+          .map((number, index) => {
+            return (
+              <li key={number}>
+                <PageButton
+                  type="button"
+                  active={currentPage === number ? "active" : ""}
+                  onClick={() => paginate(number)}
+                >
+                  {number}
+                </PageButton>
+              </li>
+            );
+          })}
+
+        {currentPage !== totalPageNumber && currentPage < totalPageNumber - 2 && (
+          <>
+            <Margin mr="0.5rem" ml="0.5rem">
+              ...
+            </Margin>
+            <PageButton
+              type="button"
+              active={currentPage === totalPageNumber ? "active" : ""}
+              onClick={() => paginate(totalPageNumber)}
+            >
+              {totalPageNumber}
+            </PageButton>
+          </>
+        )}
+
         <li>
           <PageButton
             disabled={currentPage === totalPageNumber}

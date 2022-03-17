@@ -6,6 +6,8 @@ import { Routes, Route } from "react-router-dom";
 import MainContextProvider from "./contexts/MainContextProvider";
 //pages
 import { Home, Results } from "./pages";
+// component
+import { Footer } from "./components";
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/results"} element={<Results />} />
       </Routes>
+      <Footer />
     </MainContextProvider>
   );
 }

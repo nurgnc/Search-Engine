@@ -19,7 +19,7 @@ function Home() {
   const { search, searchResult } = useContext(MainContext);
 
   return (
-    <Container>
+    <Container height="90vh">
       <Flex flexDirection="column" align="center" justify="center">
         <MarginVertical>
           <img src={logo} alt="logo" />

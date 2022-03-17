@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination";
 import logo from "../assets/logo.png";
 // css
 import { Container, Flex, Margin, MarginVertical } from "../styles/baseStyles";
+import { Select } from "../styles/Select.styled";
 
 function Results() {
   const { search, searchResult, currentPage, usersPerPage, totalUsers } =
@@ -50,8 +51,8 @@ function Results() {
   }, [searchResult]);
 
   return (
-    <Container>
-      <Margin mb="2.5rem">
+    <Container height="90vh">
+      <Margin mb="2.5rem" mt="3rem">
         <Flex flexDirection="row" align="center" justify="space-around">
           <Link to="/">
             <img src={logo} alt="logo" />
@@ -62,15 +63,19 @@ function Results() {
           </Link>
         </Flex>
       </Margin>
-      <Flex flexDirection="row" align="center" justify="flex-end">
-        <select name="Order By" onChange={(e) => setSelect(e.target.value)}>
-          <option value="none">Select by order</option>
-          <option value="name-asc">Name ascending</option>
-          <option value="name-desc">Name descending</option>
-          <option value="year-asc">Year ascending</option>
-          <option value="year-desc">Year descending</option>
-        </select>
-      </Flex>
+      {search && (
+        <Flex flexDirection="row" align="center" justify="flex-end">
+          <Select>
+            <select name="Order By" onChange={(e) => setSelect(e.target.value)}>
+              <option value="none">&#8645; Order</option>
+              <option value="name-asc">Name ascending</option>
+              <option value="name-desc">Name descending</option>
+              <option value="year-asc">Year ascending</option>
+              <option value="year-desc">Year descending</option>
+            </select>
+          </Select>
+        </Flex>
+      )}
       <MarginVertical>
         {resultData
           .slice(indexOfFirstUser, indexOfLastUser)
