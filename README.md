@@ -19,4 +19,11 @@ redirected to the result page. <br />
 :heavy_check_mark: A pagination should be present for the search results greater than 3. <br />
 :heavy_check_mark: Writing tests is a bonus. <br />
 
+ ## Home page
+ 
+ ![IMAGE](src/assets/home-page.jpg)
 
+
+## Results page
+
+ ![IMAGE](src/assets/result-page.jpg)
