@@ -23,6 +23,7 @@ export default function MainContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(6);
   const totalUsers = searchResult?.length;
+  const totalPageNumber = Math.ceil(totalUsers / usersPerPage);
 
   // change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -37,6 +38,7 @@ export default function MainContextProvider({ children }) {
     paginate,
     usersPerPage,
     totalUsers,
+    totalPageNumber,
   };
 
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;

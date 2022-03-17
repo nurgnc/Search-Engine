@@ -5,56 +5,64 @@ import { MainContext } from "../contexts/MainContextProvider";
 import { Link } from "react-router-dom";
 // components
 import { Button, Input, UserCard } from "../components";
+import Pagination from "../components/Pagination";
 // logo img
 import logo from "../assets/logo.png";
-import Pagination from "../components/Pagination";
+// css
+import { Container, Flex, Margin, MarginVertical } from "../styles/baseStyles";
 
 function Results() {
-  const { search, searchResult, currentPage, usersPerPage } =
+  const { search, searchResult, currentPage, usersPerPage, totalUsers } =
     useContext(MainContext);
-  const [select, setSelect] = useState();
-  const [resultData, setResultData] = useState(searchResult);
-  console.log("resultData::::", resultData);
+  const [select, setSelect] = useState("none");
+  const [resultData, setResultData] = useState([...searchResult]);
 
   // get current movies
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
+  const orderOperations = {
+    "name-asc": (list) => list.sort(),
+    "name-desc": (list) => list.sort().reverse(),
+    "year-asc": (list) =>
+      list.sort(function (a, b) {
+        return a[3].split("/")[2] - b[3].split("/")[2];
+      }),
+    "year-desc": (list) =>
+      list.sort(function (a, b) {
+        return b[3].split("/")[2] - a[3].split("/")[2];
+      }),
+  };
+
   useEffect(() => {
-    if (select === "name-asc") {
-      let nameAsc = searchResult.sort();
-      setResultData(nameAsc);
-    } else if (select === "name-desc") {
-      let nameDesc = searchResult.sort().reverse();
-      setResultData(nameDesc);
-    } else if (select === "year-asc") {
-      let yearAsc = searchResult.sort(function (a, b) {
-        return a - b;
-      });
-      setResultData(yearAsc);
-    } else if (select === "year-desc") {
-      let yearDesc = searchResult.sort(function (a, b) {
-        return b - a;
-      });
-      setResultData(yearDesc);
-    } else setResultData(resultData);
+    if (select == "none") {
+      return;
+    }
+
+    let list = [...searchResult];
+
+    orderOperations[select](list);
+    setResultData(list);
   }, [select]);
 
-  // console.log("searchResult::::", searchResult);
+  useEffect(() => {
+    setResultData(searchResult);
+  }, [searchResult]);
+
   return (
-    <div>
-      <div>
-        <Link to="/">
-          <img src={logo} alt="logo" />
-        </Link>
-      </div>
-      <div>
-        <Input />
-        <Link to={search ? "/results" : ""}>
-          <Button />
-        </Link>
-      </div>
-      <div>
+    <Container>
+      <Margin mb="2.5rem">
+        <Flex flexDirection="row" align="center" justify="space-around">
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+          <Input width="60%" />
+          <Link to={search ? "/results" : ""}>
+            <Button bgColor="#4F75C2" />
+          </Link>
+        </Flex>
+      </Margin>
+      <Flex flexDirection="row" align="center" justify="flex-end">
         <select name="Order By" onChange={(e) => setSelect(e.target.value)}>
           <option value="none">Select by order</option>
           <option value="name-asc">Name ascending</option>
@@ -62,8 +70,8 @@ function Results() {
           <option value="year-asc">Year ascending</option>
           <option value="year-desc">Year descending</option>
         </select>
-      </div>
-      <div>
+      </Flex>
+      <MarginVertical>
         {resultData
           .slice(indexOfFirstUser, indexOfLastUser)
           .map((item, index) => (
@@ -76,9 +84,9 @@ function Results() {
               city={item[5]}
             />
           ))}
-      </div>
-      <Pagination />
-    </div>
+      </MarginVertical>
+      {totalUsers > 3 && <Pagination />}
+    </Container>
   );
 }
 

@@ -3,35 +3,51 @@ import React, { useContext } from "react";
 import { MainContext } from "../contexts/MainContextProvider";
 // css
 import { Flex } from "../styles/baseStyles";
-import { Paginate } from "../styles/Pagination";
+import { Paginate, PageButton } from "../styles/Pagination";
 
 function Pagination() {
-  const { totalUsers, usersPerPage, paginate, currentPage } =
-    useContext(MainContext);
+  const { paginate, currentPage, totalPageNumber } = useContext(MainContext);
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i += 1) {
+  for (let i = 1; i <= totalPageNumber; i += 1) {
+    if (i === 4 && totalPageNumber === 7) {
+      pageNumbers.push(-1);
+      i = totalPageNumber - 3;
+    }
     pageNumbers.push(i);
   }
+
   return (
     <Flex flexDirection="row" align="center" justify="center">
       <Paginate>
         <li>
-          <button onClick={() => paginate(currentPage - 1)}>Previous</button>
+          <PageButton
+            disabled={currentPage === 1}
+            onClick={() => paginate(currentPage - 1)}
+          >
+            Previous
+          </PageButton>
         </li>
-        {pageNumbers.map((number) => (
-          <li key={number}>
-            <button
-              type="button"
-              active={currentPage === number ? "active" : ""}
-              onClick={() => paginate(number)}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
+        {pageNumbers.map((number, index) => {
+          return (
+            <li key={number}>
+              <PageButton
+                type="button"
+                active={currentPage === number ? "active" : ""}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </PageButton>
+            </li>
+          );
+        })}
         <li>
-          <button onClick={() => paginate(currentPage + 1)}>Next</button>
+          <PageButton
+            disabled={currentPage === totalPageNumber}
+            onClick={() => paginate(currentPage + 1)}
+          >
+            Next
+          </PageButton>
         </li>
       </Paginate>
     </Flex>

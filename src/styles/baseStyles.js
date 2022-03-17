@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export const MarginVertical = styled.div`
-  margin: 4rem auto;
+  margin: 3rem auto;
   width: ${(props) => props.width};
 `;
 
