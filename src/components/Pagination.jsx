@@ -41,26 +41,18 @@ function Pagination() {
             );
           })}
 
-        {currentPage !== totalPageNumber && currentPage < totalPageNumber - 4 && (
+        {currentPage !== totalPageNumber && currentPage < totalPageNumber - 3 && (
           <>
             <Margin mr="0.5rem" ml="0.5rem">
               ...
             </Margin>
-            {pageNumbers
-              .slice(totalPageNumber - 3, totalPageNumber + 1)
-              .map((number, index) => {
-                return (
-                  <li key={number}>
-                    <PageButton
-                      type="button"
-                      active={currentPage === number ? "active" : ""}
-                      onClick={() => paginate(number)}
-                    >
-                      {number}
-                    </PageButton>
-                  </li>
-                );
-              })}
+            <PageButton
+              type="button"
+              active={currentPage === totalPageNumber ? "active" : ""}
+              onClick={() => paginate(totalPageNumber)}
+            >
+              {totalPageNumber}
+            </PageButton>
           </>
         )}
 
