@@ -10,10 +10,6 @@ function Pagination() {
   const pageNumbers = [];
 
   for (let i = 1; i <= totalPageNumber; i += 1) {
-    if (i === 4 && totalPageNumber === 7) {
-      pageNumbers.push(-1);
-      i = totalPageNumber - 3;
-    }
     pageNumbers.push(i);
   }
 
@@ -23,6 +19,7 @@ function Pagination() {
         <li>
           <PageButton
             disabled={currentPage === 1}
+            data-testid="previous-btn"
             onClick={() => paginate(currentPage - 1)}
           >
             Previous
@@ -44,18 +41,26 @@ function Pagination() {
             );
           })}
 
-        {currentPage !== totalPageNumber && currentPage < totalPageNumber - 2 && (
+        {currentPage !== totalPageNumber && currentPage < totalPageNumber - 4 && (
           <>
             <Margin mr="0.5rem" ml="0.5rem">
               ...
             </Margin>
-            <PageButton
-              type="button"
-              active={currentPage === totalPageNumber ? "active" : ""}
-              onClick={() => paginate(totalPageNumber)}
-            >
-              {totalPageNumber}
-            </PageButton>
+            {pageNumbers
+              .slice(totalPageNumber - 3, totalPageNumber + 1)
+              .map((number, index) => {
+                return (
+                  <li key={number}>
+                    <PageButton
+                      type="button"
+                      active={currentPage === number ? "active" : ""}
+                      onClick={() => paginate(number)}
+                    >
+                      {number}
+                    </PageButton>
+                  </li>
+                );
+              })}
           </>
         )}
 
@@ -63,6 +68,7 @@ function Pagination() {
           <PageButton
             disabled={currentPage === totalPageNumber}
             onClick={() => paginate(currentPage + 1)}
+            data-testid="next-btn"
           >
             Next
           </PageButton>

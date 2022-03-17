@@ -36,7 +36,7 @@ function Home() {
             <ResultField active={search ? "active" : "none"}>
               {search &&
                 searchResult
-                  .slice(0, 3)
+                  ?.slice(0, 3)
                   .map((item, index) => (
                     <UserCard
                       key={index}
@@ -47,14 +47,16 @@ function Home() {
                       city={item[5]}
                     />
                   ))}
-              {search && searchResult.length === 0 && (
+              {search && searchResult?.length === 0 && (
                 <div>
                   <BoldText>No results...</BoldText>
                 </div>
               )}
-              {search && searchResult.length > 0 && (
+              {search && searchResult?.length > 0 && (
                 <ShowLinkContent>
-                  <ShowLink to="/results">Show more...</ShowLink>
+                  <ShowLink data-testid="showMore-link" to="/results">
+                    Show more...
+                  </ShowLink>
                 </ShowLinkContent>
               )}
             </ResultField>

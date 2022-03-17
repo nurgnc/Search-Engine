@@ -2,7 +2,7 @@ import { SearchButton } from "../styles/Button.styled";
 
 function Button({ bgColor }) {
   return (
-    <SearchButton bgColor={bgColor} type="button">
+    <SearchButton data-testid="search-button" bgColor={bgColor} type="button">
       Search
     </SearchButton>
   );
